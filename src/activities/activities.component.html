@@ -1,0 +1,24 @@
+<h1>Attività</h1>
+<button *ngIf="!showForm" (click)="addBtn()">Aggiungi attività</button>
+
+<table class="table">
+    <th>Descrizione</th>
+    <th>Data</th>
+    <th>Ora inizio</th>
+    <th>Ora fine</th>
+    <tr *ngFor="let item of risultato" (click)="removeActivities()">
+        <td>{{item.descrizione}}</td>
+        <td>{{item.data}}</td>
+        <td>{{item.oraInizio}}</td>
+        <td>{{item.oraFine}}</td>
+    </tr>
+    <tr *ngIf="showForm">
+   
+        <td><input  [(ngModel)]="newActi.descrizione" type="text" placeholder="Descrizione"></td>
+        <td><input [(ngModel)]="newActi.data" placeholder="00/00/00" type="text"></td>
+        <td><input [(ngModel)]="newActi.oraInizio" placeholder="00:00" type="text"></td>
+        <td><input [(ngModel)]="newActi.oraFine"placeholder="00:00" type="text"></td>
+        <td><button (click)="addNewActivities()">Aggiungi</button></td>
+    
+</tr>
+</table>
