@@ -1,16 +1,20 @@
 <h1>Attività</h1>
 <button *ngIf="!showForm" (click)="addBtn()">Aggiungi attività</button>
 
-<table class="table">
+<table class="table ">
+    <thead class="thead-dark ">
     <th>Descrizione</th>
     <th>Data</th>
     <th>Ora inizio</th>
     <th>Ora fine</th>
-    <tr *ngFor="let item of risultato" (click)="removeActivities()">
-        <td>{{item.descrizione}}</td>
-        <td>{{item.data}}</td>
-        <td>{{item.oraInizio}}</td>
-        <td>{{item.oraFine}}</td>
+</thead>
+    <tr *ngFor="let item of risultato"  (click)="onClickChangeItem()">
+        <td >{{(!showChangeItem)?item.descrizione:""}}   <input [(ngModel)]="item.descrizione" *ngIf="showChangeItem" [value]="item.descrizione"> </td>
+        <td>{{(!showChangeItem)?item.data:""}}           <input [(ngModel)]="item.data" *ngIf="showChangeItem" [value]="item.data"></td>
+        <td>{{(!showChangeItem)?item.oraInizio:""}}      <input [(ngModel)]="item.oraInizio" *ngIf="showChangeItem" [value]="item.oraInizio"></td>
+        <td>{{(!showChangeItem)?item.oraFine:""}}        <input [(ngModel)]="item.oraFine" *ngIf="showChangeItem" [value]="item.oraFine"></td>
+        <button class="btn btn-primary" *ngIf="showChangeItem" (click)="itemChange(item)">Cambia</button>
+        <button (click)="removeActivities(item.id)" class="btn btn-danger">X</button>
     </tr>
     <tr *ngIf="showForm">
    
@@ -18,7 +22,7 @@
         <td><input [(ngModel)]="newActi.data" placeholder="00/00/00" type="text"></td>
         <td><input [(ngModel)]="newActi.oraInizio" placeholder="00:00" type="text"></td>
         <td><input [(ngModel)]="newActi.oraFine"placeholder="00:00" type="text"></td>
-        <td><button (click)="addNewActivities()">Aggiungi</button></td>
+        <button (click)="addNewActivities()">Aggiungi</button><button (click)="addBtn()">Annulla</button>
     
 </tr>
 </table>

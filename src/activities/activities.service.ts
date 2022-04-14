@@ -15,4 +15,10 @@ export class ActivitiesService{
     getActivities(){
         return this.fire.collection("activities").snapshotChanges();
     }
+    deleteActivities(id:string){
+        return this.fire.collection("activities").doc(id).delete()
+    }
+    changeActivities(attivita:any){
+        this.fire.collection("activities").doc(attivita.id).update(attivita)
+    }
 }

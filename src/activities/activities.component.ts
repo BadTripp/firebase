@@ -13,6 +13,8 @@ export class ActivitiesComponent implements OnInit{
         oraInizio:"",
         oraFine:""
     }
+    showChangeItem=false;
+    waitChange=false;
     showForm=false;
     risultato : any [] = [];
     constructor(private activitiesServ:ActivitiesService){
@@ -26,11 +28,18 @@ export class ActivitiesComponent implements OnInit{
         
         
     }
+    onClickChangeItem(){
+        if(!this.waitChange){
+            this.showChangeItem=!this.showChangeItem
+            this.waitChange=true;
+        }
+    }
+    itemChange(item:any){
+        this.waitChange=false;
+        this.activitiesServ.changeActivities(item)
+    }
     addBtn(){
         this.showForm=!this.showForm
-    }
-    removeActivities(){
-        
     }
     addNewActivities(){
         this.showForm=!this.showForm
@@ -39,11 +48,17 @@ export class ActivitiesComponent implements OnInit{
     getAll(){
         this.activitiesServ.getActivities().subscribe((response)=>{
             this.risultato=response.map((elemento:any)=>{
-                return elemento.payload.doc.data()
+                
+                return  {id:elemento.payload.doc.id,...elemento.payload.doc.data()}
+                
             });
             
         });
         
+    }
+    removeActivities(id:string){
+       
+        this.activitiesServ.deleteActivities(id);
     }
     
 }
